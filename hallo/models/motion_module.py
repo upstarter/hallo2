@@ -55,8 +55,14 @@ managing positional encoding, and integrating with external libraries for effici
 import math
 
 import torch
-import xformers
-import xformers.ops
+# Make xformers optional for PyTorch nightly compatibility
+try:
+    import xformers
+    import xformers.ops
+    XFORMERS_AVAILABLE = True
+except ImportError:
+    xformers = None
+    XFORMERS_AVAILABLE = False
 from diffusers.models.attention import FeedForward
 from diffusers.models.attention_processor import Attention, AttnProcessor
 from diffusers.utils import BaseOutput
